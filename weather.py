@@ -1,6 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
+from pprint import pprint
 
 #load environment variables
 load_dotenv()
@@ -13,4 +14,38 @@ url = (
 )
 
 response = requests.get(url)
-print(response.json())
+data=response.json()
+pprint(data)
+
+if response.status_code == 200:
+    temperature = data["main"]["temp"]
+
+    feels_like = data["main"]["feels_like"]
+
+    humidity = data["main"]["humidity"]
+
+    weather = data["weather"][0]["description"]
+
+    wind_speed = data["wind"]["speed"]
+
+    print("\n" + "=" * 35)
+
+    print("Weather Report")
+
+    print("=" * 35)
+
+    print(f"City: {city}")
+
+    print(f"Temperature: {temperature}°C")
+
+    print(f"Feels Like: {feels_like}°C")
+
+    print(f"Humidity: {humidity}%")
+
+    print(f"Condition: {weather}")
+
+    print(f"Wind Speed: {wind_speed} m/s")
+
+    print("=" * 35)
+else:
+    print("City not found")
